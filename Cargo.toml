@@ -1,0 +1,20 @@
+[package]
+name = "rust-polars-experiment"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+polars = { version = "0.41.2", features = ["lazy", "async", "aws"] }
+log = "0.4.21"
+dotenv = "0.15.0"
+tokio = { version = "1.38.0", features = ["full"] }
+aws-sdk-s3 = "1.38.0"
+aws-config = "1.5.3"
+bytes = "1.6.0"
+anyhow = "1.0.86"
+clap = { version = "4.5.7", features = ["derive"] }
+env_logger = "0.11.3"
+
+[lints.clippy]
+all = "warn"
+pedantic = "warn"
