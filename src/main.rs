@@ -54,7 +54,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let file_key = std::env::var("FILE_KEY").expect("Could not load file from .env");
     let bucket = std::env::var("BUCKET_NAME").expect("Could not load file from .env");
-    let local_file_name = "temp.csv";
+    let local_file_name = Path::new(&file_key)
+        .file_name()
+        .and_then(|s| s.to_str())
+        .unwrap_or("temp.csv");
 
     if Path::new(local_file_name).exists() {
         info!("File already exists locally.");
