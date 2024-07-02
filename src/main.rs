@@ -54,12 +54,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let file_key = std::env::var("FILE_KEY").expect("Could not load file from .env");
     let bucket = std::env::var("BUCKET_NAME").expect("Could not load file from .env");
-    let local_file_name = Path::new(&file_key)
+    let file_path = Path::new(&file_key);
+    let local_file_name = file_path
         .file_name()
         .and_then(|s| s.to_str())
-        .unwrap_or("temp.csv");
+        .unwrap_or("temp.csv")
+        .to_string();
 
-    if Path::new(local_file_name).exists() {
+    if Path::new(&local_file_name).exists() {
         info!("File already exists locally.");
     } else {
         info!("Downloading file from S3");
@@ -81,7 +83,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await?;
     }
 
-    let lazy_frame = LazyCsvReader::new(local_file_name)
+    let lazy_frame = LazyCsvReader::new(&local_file_name)
         .with_has_header(true)
         .finish()?;
 
