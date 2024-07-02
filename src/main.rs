@@ -87,7 +87,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .with_has_header(true)
         .finish()?;
 
-    let df = lazy_frame.collect()?;
+    // let df = lazy_frame.collect()?;
+
+    let lazy_distinct_codes = lazy_frame
+        .group_by([col("SIC_CODE_CATEGORY")])
+        .agg([col("SIC_CODE_CATEGORY").count().alias("count")])
+        .sort(["SIC_CODE_CATEGORY"], SortMultipleOptions::default());
+
+    let df = lazy_distinct_codes.collect()?;
 
     info!("{df}");
 
