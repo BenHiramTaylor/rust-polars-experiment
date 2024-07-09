@@ -6,18 +6,14 @@ use std::path::{Path, PathBuf};
 use aws_config::{BehaviorVersion, SdkConfig};
 use aws_sdk_s3::Client;
 use aws_sdk_s3::config::Region;
-use clap::Parser;
 use dotenv::dotenv;
 use log::{info, trace};
 use polars::prelude::*;
 
-#[derive(Debug, Parser)]
+#[derive(Debug)]
 struct Opt {
-    #[structopt(long)]
     bucket: String,
-    #[structopt(long)]
     object: String,
-    #[structopt(long)]
     destination: PathBuf,
 }
 
